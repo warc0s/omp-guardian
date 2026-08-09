@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto"
-import { open, realpath, stat } from "node:fs/promises"
+import { open, realpath } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { basename, isAbsolute, join, resolve, sep } from "node:path"
 import type { PermissionRequest } from "./types.ts"
@@ -355,14 +355,19 @@ async function includeFileOnce(
       }
     }
 
-    const info = await stat(actual)
-    if (!info.isFile()) {
-      return { source: "file", path: resolved, status: "unavailable", reason: "not a regular file" }
-    }
-
-    const limit = Math.max(1, maxChars)
     const handle = await open(actual, "r")
     try {
+      const info = await handle.stat()
+      if (!info.isFile()) {
+        return {
+          source: "file",
+          path: resolved,
+          status: "unavailable",
+          reason: "not a regular file",
+        }
+      }
+
+      const limit = Math.max(1, maxChars)
       const buffer = Buffer.alloc(Math.min(info.size, limit + 1))
       const { bytesRead } = await handle.read(buffer, 0, buffer.length, 0)
       const included = buffer.subarray(0, Math.min(bytesRead, limit))

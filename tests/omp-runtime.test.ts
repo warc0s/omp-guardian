@@ -633,4 +633,27 @@ describe("reviewer subprocess isolation", () => {
     expect(result).toMatchObject({ outcome: "allow", version: 2 })
     invoker.dispose()
   })
+
+  test("parses fenced reviewer JSON without a backtracking expression", async () => {
+    const fake = join(import.meta.dir, "fixtures", "fake-omp.ts")
+    await chmod(fake, 0o755)
+    process.env.OMP_APPROVAL_REVIEWER_HOST = fake
+    process.env.OMP_TEST_FENCED_OUTPUT = "1"
+    const cwd = await mkdtemp(join(tmpdir(), "omp-fenced-output-test-"))
+    roots.push(cwd)
+    const invoker = new OmpProcessReviewerInvoker()
+    try {
+      const result = await invoker.invoke({
+        model: { provider: "commandcode", id: "deepseek/deepseek-v4-flash" },
+        thinkingLevel: "max",
+        prompt: "review",
+        timeoutMs: 5_000,
+        cwd,
+      })
+      expect(result).toMatchObject({ outcome: "allow", version: 2 })
+    } finally {
+      delete process.env.OMP_TEST_FENCED_OUTPUT
+      invoker.dispose()
+    }
+  })
 })

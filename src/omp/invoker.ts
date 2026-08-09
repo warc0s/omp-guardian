@@ -41,12 +41,24 @@ export function reviewerSystemPromptPath(): string {
   return found
 }
 
-function parseJsonOutput(text: string): unknown {
+function isJsonWhitespace(code: number): boolean {
+  return code === 0x20 || code === 0x09 || code === 0x0a || code === 0x0d
+}
+
+function stripOptionalJsonFence(text: string): string {
   const trimmed = text.trim()
-  const unfenced = trimmed
-    .replace(/^```(?:json)?\s*/i, "")
-    .replace(/\s*```$/, "")
-    .trim()
+  const opening = trimmed.slice(0, 7).toLowerCase()
+  let start = opening === "```json" ? 7 : trimmed.startsWith("```") ? 3 : 0
+  if (start === 0 || !trimmed.endsWith("```") || trimmed.length < start + 3) return trimmed
+
+  let end = trimmed.length - 3
+  while (start < end && isJsonWhitespace(trimmed.charCodeAt(start))) start++
+  while (end > start && isJsonWhitespace(trimmed.charCodeAt(end - 1))) end--
+  return trimmed.slice(start, end)
+}
+
+function parseJsonOutput(text: string): unknown {
+  const unfenced = stripOptionalJsonFence(text)
   try {
     return JSON.parse(unfenced)
   } catch {
