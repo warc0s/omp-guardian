@@ -3,9 +3,9 @@ import { buildReviewerPrompt, DEFAULT_TENANT_POLICY } from "../src/policy.ts"
 import { redactSecrets } from "../src/redact.ts"
 
 // Live-secret-shaped fixtures are built by string concatenation so that no
-// continuous literal in source matches a static secret scanner (see AGENTS.md).
-// Scanners key on the full token shape; splitting the recognized prefix from
-// the body defeats that without weakening the assertion.
+// continuous literal in source matches a static secret scanner. Scanners key
+// on the full token shape; splitting the recognized prefix from the body
+// defeats that without weakening the assertion.
 const AWS_EX = "AKIA" + "IOSFODNN7EXAMPLE"
 const AWS_ASIA = "ASIA" + "IOSFODNN7EXAMPLE"
 const GHP = "ghp_" + "syntheticGitHubToken01234567890abcdefghijklmnopqrstuv"

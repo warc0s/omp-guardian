@@ -5,6 +5,11 @@ and this project uses Semantic Versioning.
 
 ## [Unreleased]
 
+**Breaking:** this release renames the project brand and identifiers from
+OMP Approval Reviewer to OMP Guardian. The display name, repository, package
+name, public API symbols, subprocess environment variables, and OMP
+configuration and audit paths all change. See the migration notes below.
+
 ### Changed
 
 - Renamed the project brand and identifiers to OMP Guardian. The display name,

@@ -71,7 +71,7 @@ describe("SSH evidence enrichment", () => {
     await writeFile(oversized, "x".repeat(2_000))
     await writeFile(binary, Buffer.from([0, 1, 2, 3]))
     // Synthetic credential assembled by concatenation so no continuous
-    // secret-shaped literal appears in source (see AGENTS.md).
+    // secret-shaped literal appears in source.
     const synthCred = "sk-" + "examplecredential123456789"
     await writeFile(credential, `api_key = "${synthCred}"\n`)
 
