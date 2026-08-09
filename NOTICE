@@ -1,0 +1,11 @@
+OMP Approval Reviewer
+
+The policy design of this project is inspired by OpenAI Codex Guardian:
+
+  https://github.com/openai/codex/tree/main/codex-rs/core/src/guardian
+
+The implementation and policy wording in this repository are independently
+written for Oh My Pi and do not reproduce Guardian text. The link is retained
+to acknowledge the design inspiration.
+
+This project is licensed under the Apache License, Version 2.0. See LICENSE.
