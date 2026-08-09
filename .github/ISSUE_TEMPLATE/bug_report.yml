@@ -1,0 +1,53 @@
+name: Bug report
+description: Report a bug in OMP Approval Reviewer
+title: "[bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For security vulnerabilities, use private vulnerability reporting:
+        https://github.com/Warc0s/omp-approval-reviewer/security/advisories/new
+
+        Never paste secrets, session files, real private paths, or private
+        repository contents. Redact audit records before sharing them.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: extension-version
+    attributes:
+      label: Extension version
+      placeholder: "0.1.0-beta.1"
+    validations:
+      required: true
+  - type: input
+    id: omp-version
+    attributes:
+      label: OMP version
+      description: Output of `omp --version`.
+    validations:
+      required: true
+  - type: input
+    id: bun-version
+    attributes:
+      label: Bun version
+      description: Output of `bun --version`.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the tool, synthetic arguments, expected route, and observed route.
+    validations:
+      required: true
+  - type: textarea
+    id: audit
+    attributes:
+      label: Redacted audit record
+      render: json

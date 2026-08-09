@@ -1,0 +1,33 @@
+version: 2
+updates:
+  # npm dependencies — weekly checks, grouped to reduce PR noise.
+  # PRs target `dev` (the integration branch) instead of `main` so Dependabot
+  # compares against the up-to-date manifest and does not re-open PRs for
+  # versions already integrated.
+  - package-ecosystem: npm
+    directory: /
+    target-branch: dev
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # Non-breaking type+patch updates batch together.
+      patch-and-minor:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: chore
+      include: scope
+
+  # GitHub Actions used in workflows.
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: dev
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: ci
+      include: scope

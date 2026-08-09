@@ -1,0 +1,22 @@
+{
+  // Cheap deterministic routing runs before the model reviewer.
+  "autoAllowWorkspaceEdits": true,
+  "autoAllowReadOnlyBash": true,
+  "autoAllowLocalTests": true,
+
+  // Subagent actions are independently gated, so spawning is cheap by default.
+  "reviewSubagentSpawns": false,
+
+  // These surfaces have side effects that OMP Guardian cannot prove harmless.
+  "reviewTools": ["python", "notebook", "browser", "computer", "delete", "move"],
+  "reviewMcp": true,
+  "reviewUnknownTools": true,
+
+  // Trusted hard policy resolves before inference.
+  "deniedBashExecutables": ["sudo"],
+  "trustedWriteRoots": [],
+
+  "confidenceThreshold": 0.7,
+  "escalationMode": "manual",
+  "audit": true,
+}

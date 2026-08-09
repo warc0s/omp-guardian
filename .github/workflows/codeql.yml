@@ -1,0 +1,44 @@
+name: codeql
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+  schedule:
+    # Weekly scan on Monday.
+    - cron: "16 4 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+          # The plugin shells out to read-only enrichment commands and replies
+          # through an authenticated transport. Tune the suite to surface
+          # command-injection and path-traversal regressions.
+          queries: security-extended
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:javascript-typescript"
+
+  # Stable required-check name for branch protection (matches the workflow name
+  # already configured on main). Must use always() so a failed analyze still
+  # reports a red gate instead of a skipped/pending required check.
+  codeql:
+    name: codeql
+    if: always()
+    needs: [analyze]
+    runs-on: ubuntu-latest
+    steps:
+      - name: CodeQL analysis green
+        run: |
+          [ "${{ needs.analyze.result }}" = "success" ] || { echo "analyze failed: ${{ needs.analyze.result }}"; exit 1; }
