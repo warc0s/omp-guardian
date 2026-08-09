@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a bug in OMP Approval Reviewer
+description: Report a bug in OMP Guardian
 title: "[bug] "
 labels: ["bug", "needs-triage"]
 body:
@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         For security vulnerabilities, use private vulnerability reporting:
-        https://github.com/Warc0s/omp-approval-reviewer/security/advisories/new
+        https://github.com/Warc0s/omp-guardian/security/advisories/new
 
         Never paste secrets, session files, real private paths, or private
         repository contents. Redact audit records before sharing them.

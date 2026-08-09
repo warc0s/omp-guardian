@@ -5,6 +5,30 @@ and this project uses Semantic Versioning.
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed the project brand and identifiers to OMP Guardian. The display name,
+  repository, package name, public API symbols (`OmpGuardian`,
+  `installOmpGuardian`), and subprocess environment variables
+  (`OMP_GUARDIAN_HOST`, `OMP_GUARDIAN_CHILD`) now use the OMP Guardian identity.
+
+### Removed
+
+- Dropped the legacy `omp-approval-reviewer` identifiers and the previous
+  `OmpApprovalReviewer` / `installOmpApprovalReviewer` / `OMP_APPROVAL_REVIEWER_*`
+  names.
+
+### Migration
+
+- Global configuration moved from `~/.omp/agent/omp-approval-reviewer.jsonc` to
+  `~/.omp/agent/omp-guardian.jsonc`.
+- Project hardening moved from `<repository>/.omp/approval-reviewer.jsonc` to
+  `<repository>/.omp/guardian.jsonc`.
+- The audit trail moved from
+  `~/.omp/agent/omp-approval-reviewer-audit.jsonl` to
+  `~/.omp/agent/omp-guardian-audit.jsonl`. Rename the existing file to preserve
+  prior records.
+
 ## [0.1.0-beta.1] - 2026-08-09
 
 ### Added

@@ -11,7 +11,7 @@ const required = [
   "--no-pty",
 ]
 if (!required.every((flag) => args.includes(flag))) process.exit(41)
-if (process.env.OMP_APPROVAL_REVIEWER_CHILD !== "1") process.exit(42)
+if (process.env.OMP_GUARDIAN_CHILD !== "1") process.exit(42)
 if (args[args.indexOf("--model") + 1] !== "commandcode/deepseek/deepseek-v4-flash") process.exit(43)
 if (args[args.indexOf("--thinking") + 1] !== "max") process.exit(44)
 const decision = JSON.stringify({

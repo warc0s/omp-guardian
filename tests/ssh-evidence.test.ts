@@ -8,7 +8,7 @@ import { request } from "./helpers.ts"
 const temporaryDirectories: string[] = []
 
 async function fixture(): Promise<string> {
-  const directory = await mkdtemp(join(tmpdir(), "approval-reviewer-ssh-"))
+  const directory = await mkdtemp(join(tmpdir(), "guardian-ssh-"))
   temporaryDirectories.push(directory)
   return directory
 }

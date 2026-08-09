@@ -7,12 +7,12 @@ const root = join(import.meta.dir, "..")
 describe("OMP extension manifest", () => {
   test("is public-source, npm-private, and declares the built extension", () => {
     const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"))
-    expect(pkg.name).toBe("omp-approval-reviewer")
+    expect(pkg.name).toBe("omp-guardian")
     expect(pkg.version).toBe("0.1.0-beta.1")
     expect(pkg.private).toBe(true)
     expect(pkg.omp.extensions).toEqual(["./dist/index.js"])
     expect(pkg.bin).toBeUndefined()
-    expect(pkg.repository.url).toContain("Warc0s/omp-approval-reviewer")
+    expect(pkg.repository.url).toContain("Warc0s/omp-guardian")
     expect(pkg.engines.omp).toBe(">=17.2.12 <18")
   })
 

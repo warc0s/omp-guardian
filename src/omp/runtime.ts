@@ -12,7 +12,7 @@ import {
 import { loadOmpConfig } from "./config.ts"
 import { OmpProcessReviewerInvoker } from "./invoker.ts"
 import { requestFromToolCall } from "./request.ts"
-import { OmpApprovalReviewer } from "./reviewer.ts"
+import { OmpGuardian } from "./reviewer.ts"
 import { routeBashCommand, routeToolCall } from "./routing.ts"
 import type {
   OmpExtensionApi,
@@ -96,14 +96,11 @@ export interface OmpRuntimeOptions {
   loadConfig?: (cwd: string) => OmpReviewerConfig
 }
 
-export function installOmpApprovalReviewer(
-  pi: OmpExtensionApi,
-  options: OmpRuntimeOptions = {},
-): void {
-  if (process.env.OMP_APPROVAL_REVIEWER_CHILD === "1") return
+export function installOmpGuardian(pi: OmpExtensionApi, options: OmpRuntimeOptions = {}): void {
+  if (process.env.OMP_GUARDIAN_CHILD === "1") return
   const invoker = options.invoker ?? new OmpProcessReviewerInvoker()
   const configFor = options.loadConfig ?? loadOmpConfig
-  const reviewers = new Map<string, OmpApprovalReviewer>()
+  const reviewers = new Map<string, OmpGuardian>()
   const denials = new Map<string, DenialState>()
   const sessionKey = (ctx: OmpExtensionContext) => ctx.sessionManager.getSessionId?.() ?? ctx.cwd
   const markAllowed = (ctx: OmpExtensionContext) => {
@@ -137,7 +134,7 @@ export function installOmpApprovalReviewer(
   const reviewerFor = (cwd: string) => {
     let reviewer = reviewers.get(cwd)
     if (!reviewer) {
-      reviewer = new OmpApprovalReviewer(configFor(cwd), invoker)
+      reviewer = new OmpGuardian(configFor(cwd), invoker)
       reviewers.set(cwd, reviewer)
     }
     return reviewer

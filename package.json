@@ -1,5 +1,5 @@
 {
-  "name": "omp-approval-reviewer",
+  "name": "omp-guardian",
   "version": "0.1.0-beta.1",
   "private": true,
   "description": "Policy-aware approval reviewer for Oh My Pi",
@@ -31,13 +31,13 @@
   ],
   "license": "Apache-2.0",
   "author": "Warc0s",
-  "homepage": "https://github.com/Warc0s/omp-approval-reviewer",
+  "homepage": "https://github.com/Warc0s/omp-guardian",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Warc0s/omp-approval-reviewer.git"
+    "url": "https://github.com/Warc0s/omp-guardian.git"
   },
   "bugs": {
-    "url": "https://github.com/Warc0s/omp-approval-reviewer/issues"
+    "url": "https://github.com/Warc0s/omp-guardian/issues"
   },
   "keywords": [
     "omp",

@@ -15,7 +15,7 @@ async function git(directory: string, args: string[]): Promise<void> {
 }
 
 async function repository(): Promise<string> {
-  const directory = await mkdtemp(join(tmpdir(), "approval-reviewer-git-"))
+  const directory = await mkdtemp(join(tmpdir(), "guardian-git-"))
   temporaryDirectories.push(directory)
   await git(directory, ["init", "-b", "staging"])
   await git(directory, ["config", "user.email", "reviewer@example.invalid"])
@@ -69,7 +69,7 @@ describe("Git state evidence enrichment", () => {
   })
 
   test("uses the repository selected by cd or git -C", async () => {
-    const outer = await mkdtemp(join(tmpdir(), "approval-reviewer-git-outer-"))
+    const outer = await mkdtemp(join(tmpdir(), "guardian-git-outer-"))
     temporaryDirectories.push(outer)
     const directory = await repository()
     await writeFile(join(directory, "target.py"), "selected = true\n")
@@ -102,7 +102,7 @@ describe("Git state evidence enrichment", () => {
   })
 
   test("fails closed as unavailable outside a repository", async () => {
-    const directory = await mkdtemp(join(tmpdir(), "approval-reviewer-no-git-"))
+    const directory = await mkdtemp(join(tmpdir(), "guardian-no-git-"))
     temporaryDirectories.push(directory)
     const command = "git commit -m test"
     const result = await enrichGitEvidence(

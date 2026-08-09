@@ -1,4 +1,4 @@
-# OMP Approval Reviewer
+# OMP Guardian
 
 > [!IMPORTANT]
 > This project is an early **beta**. It makes security-sensitive decisions and
@@ -14,8 +14,8 @@ tool calls, and asks a separate tool-free model process to return one structured
 decision: `allow`, `deny`, or `escalate`.
 
 [![Bun](https://img.shields.io/badge/Bun-%E2%89%A51.3.0-000000)](https://bun.sh)
-[![License](https://img.shields.io/github/license/Warc0s/omp-approval-reviewer?color=blue)](./LICENSE)
-[![Checks](https://img.shields.io/github/actions/workflow/status/Warc0s/omp-approval-reviewer/ci.yml?branch=main&label=checks)](https://github.com/Warc0s/omp-approval-reviewer/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/Warc0s/omp-guardian?color=blue)](./LICENSE)
+[![Checks](https://img.shields.io/github/actions/workflow/status/Warc0s/omp-guardian/ci.yml?branch=main&label=checks)](https://github.com/Warc0s/omp-guardian/actions/workflows/ci.yml)
 
 ## What it does
 
@@ -50,8 +50,8 @@ to claim compatibility with an unverified OMP major release.
 This beta is intentionally not published to npm.
 
 ```bash
-git clone https://github.com/Warc0s/omp-approval-reviewer.git
-cd omp-approval-reviewer
+git clone https://github.com/Warc0s/omp-guardian.git
+cd omp-guardian
 bun install --frozen-lockfile
 bun run check
 bun run build
@@ -62,14 +62,14 @@ omp plugin list
 Rebuild after pulling source changes. To unlink it:
 
 ```bash
-omp plugin uninstall omp-approval-reviewer
+omp plugin uninstall omp-guardian
 ```
 
 You can also load a checkout for one invocation without linking it:
 
 ```bash
 omp --no-extensions \
-  -e /absolute/path/to/omp-approval-reviewer/dist/index.js \
+  -e /absolute/path/to/omp-guardian/dist/index.js \
   "Your request"
 ```
 
@@ -81,16 +81,16 @@ extension's own gate still wraps Bash and selected sensitive tools.
 Trusted global configuration:
 
 ```text
-~/.omp/agent/omp-approval-reviewer.jsonc
+~/.omp/agent/omp-guardian.jsonc
 ```
 
 Optional project hardening:
 
 ```text
-<repository>/.omp/approval-reviewer.jsonc
+<repository>/.omp/guardian.jsonc
 ```
 
-Start from [config/omp-approval-reviewer.example.jsonc](./config/omp-approval-reviewer.example.jsonc).
+Start from [config/omp-guardian.example.jsonc](./config/omp-guardian.example.jsonc).
 The defaults inherit the active OMP model and thinking level:
 
 ```jsonc
@@ -147,7 +147,7 @@ or twenty cumulative denials.
 The default path is:
 
 ```text
-~/.omp/agent/omp-approval-reviewer-audit.jsonl
+~/.omp/agent/omp-guardian-audit.jsonl
 ```
 
 Records include the decision source, schema versions, action hash, outcome,

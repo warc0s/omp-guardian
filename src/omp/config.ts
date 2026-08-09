@@ -10,12 +10,7 @@ import type {
   ThinkingLevel,
 } from "./types.ts"
 
-export const DEFAULT_OMP_AUDIT_PATH = join(
-  homedir(),
-  ".omp",
-  "agent",
-  "omp-approval-reviewer-audit.jsonl",
-)
+export const DEFAULT_OMP_AUDIT_PATH = join(homedir(), ".omp", "agent", "omp-guardian-audit.jsonl")
 
 export const DEFAULT_OMP_CONFIG: OmpReviewerConfig = {
   ...DEFAULT_CONFIG,
@@ -188,11 +183,11 @@ function clampProjectConfig(
 }
 
 export function globalConfigPath(): string {
-  return join(homedir(), ".omp", "agent", "omp-approval-reviewer.jsonc")
+  return join(homedir(), ".omp", "agent", "omp-guardian.jsonc")
 }
 
 export function projectConfigPath(cwd: string): string {
-  return join(cwd, ".omp", "approval-reviewer.jsonc")
+  return join(cwd, ".omp", "guardian.jsonc")
 }
 
 export function loadOmpConfig(cwd: string, globalConfigPathOverride?: string): OmpReviewerConfig {

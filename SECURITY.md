@@ -1,12 +1,12 @@
 # Security policy
 
-OMP Approval Reviewer makes automated safety decisions, so security bugs are
+OMP Guardian makes automated safety decisions, so security bugs are
 taken seriously.
 
 Do not file a public issue for a vulnerability. Use GitHub private vulnerability
 reporting:
 
-https://github.com/Warc0s/omp-approval-reviewer/security/advisories/new
+https://github.com/Warc0s/omp-guardian/security/advisories/new
 
 Include, when possible:
 

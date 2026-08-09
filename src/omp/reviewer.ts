@@ -32,7 +32,7 @@ function resolveReviewerModel(
   }
 }
 
-export class OmpApprovalReviewer {
+export class OmpGuardian {
   private readonly writeAudit: (record: ReviewAuditRecord) => Promise<void>
 
   constructor(

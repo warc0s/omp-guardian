@@ -6,8 +6,8 @@ narrow, explain the safety impact, and add regression tests for behavior changes
 ## Setup
 
 ```bash
-git clone https://github.com/Warc0s/omp-approval-reviewer.git
-cd omp-approval-reviewer
+git clone https://github.com/Warc0s/omp-guardian.git
+cd omp-guardian
 bun install --frozen-lockfile
 bun run check
 ```

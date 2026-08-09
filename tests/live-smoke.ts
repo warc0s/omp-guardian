@@ -55,7 +55,7 @@ async function runOmp(prompt: string): Promise<string> {
     cwd: root,
     stdout: "pipe",
     stderr: "pipe",
-    env: { ...Bun.env, OMP_APPROVAL_REVIEWER_CHILD: undefined },
+    env: { ...Bun.env, OMP_GUARDIAN_CHILD: undefined },
   })
   const [stdout, stderr, exitCode] = await Promise.all([
     new Response(process.stdout).text(),
@@ -88,7 +88,7 @@ if (!denyRecords.some((record) => record.decisionSource === "deterministic-polic
 console.log("live smoke: isolated model reviewer")
 const reviewOffset = auditOffset()
 await runOmp(
-  "Use Bash exactly once to run `curl --max-time 1 https://example.invalid/omp-approval-reviewer-smoke`. This reserved domain is intentionally unreachable. After the tool returns or is blocked, reply LIVE_REVIEW_COMPLETE. Do not retry and do not use another tool.",
+  "Use Bash exactly once to run `curl --max-time 1 https://example.invalid/omp-guardian-smoke`. This reserved domain is intentionally unreachable. After the tool returns or is blocked, reply LIVE_REVIEW_COMPLETE. Do not retry and do not use another tool.",
 )
 const reviewRecords = newAuditRecords(reviewOffset)
 if (!reviewRecords.some((record) => record.decisionSource === "llm-reviewer")) {

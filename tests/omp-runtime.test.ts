@@ -6,7 +6,7 @@ import { DEFAULT_OMP_CONFIG, loadOmpConfig } from "../src/omp/config.ts"
 import { OmpProcessReviewerInvoker } from "../src/omp/invoker.ts"
 import { isProtectedPath } from "../src/omp/paths.ts"
 import { routeBashCommand, routeToolCall } from "../src/omp/routing.ts"
-import { installOmpApprovalReviewer, shouldReviewTool } from "../src/omp/runtime.ts"
+import { installOmpGuardian, shouldReviewTool } from "../src/omp/runtime.ts"
 import type {
   OmpExtensionApi,
   OmpExtensionContext,
@@ -18,8 +18,8 @@ import type {
 
 const roots: string[] = []
 afterEach(async () => {
-  delete process.env.OMP_APPROVAL_REVIEWER_HOST
-  delete process.env.OMP_APPROVAL_REVIEWER_CHILD
+  delete process.env.OMP_GUARDIAN_HOST
+  delete process.env.OMP_GUARDIAN_CHILD
   await Promise.all(roots.splice(0).map((path) => rm(path, { recursive: true, force: true })))
 })
 
@@ -80,7 +80,7 @@ async function fixture(output: unknown = decision(), overrides: Partial<OmpRevie
     auditPath: join(cwd, "audit.jsonl"),
   }
   const pi = new MockPi()
-  installOmpApprovalReviewer(pi as unknown as OmpExtensionApi, {
+  installOmpGuardian(pi as unknown as OmpExtensionApi, {
     invoker,
     loadConfig: () => config,
   })
@@ -209,7 +209,7 @@ describe("OMP tool routing", () => {
     roots.push(root)
     await mkdir(join(root, ".omp"))
     await writeFile(
-      join(root, ".omp", "approval-reviewer.jsonc"),
+      join(root, ".omp", "guardian.jsonc"),
       JSON.stringify({
         confidenceThreshold: 0.91,
         audit: false,
@@ -239,7 +239,7 @@ describe("OMP tool routing", () => {
       }),
     )
     await writeFile(
-      join(root, ".omp", "approval-reviewer.jsonc"),
+      join(root, ".omp", "guardian.jsonc"),
       JSON.stringify({
         reviewerModel: "commandcode/deepseek/deepseek-v4-flash",
         reviewerThinking: "low",
@@ -607,9 +607,9 @@ describe("OMP runtime enforcement", () => {
     const harness = await fixture()
     await harness.pi.handlers.get("session_shutdown")!()
     expect(harness.invoker.disposed).toBe(true)
-    process.env.OMP_APPROVAL_REVIEWER_CHILD = "1"
+    process.env.OMP_GUARDIAN_CHILD = "1"
     const childPi = new MockPi()
-    installOmpApprovalReviewer(childPi as unknown as OmpExtensionApi)
+    installOmpGuardian(childPi as unknown as OmpExtensionApi)
     expect(childPi.tool).toBeUndefined()
     expect(childPi.handlers.size).toBe(0)
   })
@@ -619,7 +619,7 @@ describe("reviewer subprocess isolation", () => {
   test("passes the exact active model and disables tools, sessions, rules, skills, and LSP", async () => {
     const fake = join(import.meta.dir, "fixtures", "fake-omp.ts")
     await chmod(fake, 0o755)
-    process.env.OMP_APPROVAL_REVIEWER_HOST = fake
+    process.env.OMP_GUARDIAN_HOST = fake
     const cwd = await mkdtemp(join(tmpdir(), "omp-process-test-"))
     roots.push(cwd)
     const invoker = new OmpProcessReviewerInvoker()
@@ -637,7 +637,7 @@ describe("reviewer subprocess isolation", () => {
   test("parses fenced reviewer JSON without a backtracking expression", async () => {
     const fake = join(import.meta.dir, "fixtures", "fake-omp.ts")
     await chmod(fake, 0o755)
-    process.env.OMP_APPROVAL_REVIEWER_HOST = fake
+    process.env.OMP_GUARDIAN_HOST = fake
     process.env.OMP_TEST_FENCED_OUTPUT = "1"
     const cwd = await mkdtemp(join(tmpdir(), "omp-fenced-output-test-"))
     roots.push(cwd)

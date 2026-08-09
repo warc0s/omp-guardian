@@ -21,7 +21,7 @@ function executableOnPath(name: string): string | undefined {
 }
 
 export function resolveOmpBinary(): string {
-  const explicit = process.env.OMP_APPROVAL_REVIEWER_HOST
+  const explicit = process.env.OMP_GUARDIAN_HOST
   if (explicit && existsSync(explicit)) return explicit
   if (isOmpBinary(process.execPath)) return process.execPath
   const argvCandidate = process.argv.find((entry) => isOmpBinary(entry) && existsSync(entry))
@@ -119,7 +119,7 @@ export class OmpProcessReviewerInvoker implements ReviewerInvoker {
     ]
     const proc = spawn(binary, args, {
       cwd: request.cwd,
-      env: { ...process.env, OMP_APPROVAL_REVIEWER_CHILD: "1" },
+      env: { ...process.env, OMP_GUARDIAN_CHILD: "1" },
       stdio: ["ignore", "pipe", "pipe"],
     })
     this.children.add(proc)

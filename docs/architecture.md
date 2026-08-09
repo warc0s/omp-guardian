@@ -1,6 +1,6 @@
 # Architecture
 
-OMP Approval Reviewer is an OMP extension with one production entry point:
+OMP Guardian is an OMP extension with one production entry point:
 `dist/index.js`.
 
 ## Runtime boundary

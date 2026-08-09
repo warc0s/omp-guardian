@@ -3,13 +3,13 @@
 Trusted global settings live at:
 
 ```text
-~/.omp/agent/omp-approval-reviewer.jsonc
+~/.omp/agent/omp-guardian.jsonc
 ```
 
 Repository hardening lives at:
 
 ```text
-.omp/approval-reviewer.jsonc
+.omp/guardian.jsonc
 ```
 
 ## Trusted settings
